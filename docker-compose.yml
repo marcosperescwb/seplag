@@ -1,0 +1,107 @@
+services:
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      minionetwork:
+        ipv4_address: 172.18.0.2
+
+  minio:
+    image: docker.io/bitnami/minio:2022
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      minionetwork:
+        ipv4_address: 172.18.0.3
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=marcos.luciano.peres
+      - MINIO_ROOT_PASSWORD=mlp020572
+      - MINIO_DEFAULT_BUCKETS=bucket01
+      - MINIO_BROWSER_REDIRECT_URL=http://console.marcosperes.com.br
+      - MINIO_SERVER_URL=http://s3.marcosperes.com.br
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio_s3.rule=Host(`s3.marcosperes.com.br`)"
+      - "traefik.http.routers.minio_s3.entrypoints=web"
+      - "traefik.http.services.minio_s3.loadbalancer.server.port=9000"
+      - "traefik.http.routers.minio_console.rule=Host(`console.marcosperes.com.br`)"
+      - "traefik.http.routers.minio_console.entrypoints=web"
+      - "traefik.http.services.minio_console.loadbalancer.server.port=9001"
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust  # Permite executar o script sem autenticação
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Copia o script para dentro do container
+    networks:
+      minionetwork:
+        ipv4_address: 172.18.0.4
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      minionetwork:
+        ipv4_address: 172.18.0.5
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.marcosperes.com.br`)"
+      - "traefik.http.routers.pgadmin.entrypoints=web"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
+    depends_on:  # Garante que o Postgres esteja rodando antes do PgAdmin
+      - postgres
+      
+  java_app_v17:
+    image: openjdk:17
+    container_name: java_app_v17
+    volumes:
+      - ./java_app_v02:/usr/src/app
+    working_dir: /usr/src/app
+    command: ["sh", "-c", "while :; do sleep 10; done"]
+    networks:
+      minionetwork:
+        ipv4_address: 172.18.0.6
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.java_app_v17.rule=Host(`java17.marcosperes.com.br`)"
+      - "traefik.http.routers.java_app_v17.entrypoints=web"
+      - "traefik.http.services.java_app_v17.loadbalancer.server.port=8083"    
+    depends_on:  # Garante que o Postgres esteja rodando antes do PgAdmin
+      - postgres      
+
+networks:
+  minionetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
+volumes:
+  minio_data:
+    driver: local
+  postgres_data:
+    driver: local

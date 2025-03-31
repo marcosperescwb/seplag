@@ -1,0 +1,10 @@
+br.com.seplag.edital
+br.com.seplag.edital.config
+br.com.seplag.edital.controller
+br.com.seplag.edital.facade
+br.com.seplag.edital.factory
+br.com.seplag.edital.interceptor
+br.com.seplag.edital.model
+br.com.seplag.edital.proxy
+br.com.seplag.edital.repository
+br.com.seplag.edital.service
