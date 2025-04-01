@@ -1,0 +1,44 @@
+# Arquivos compilados do Java (Maven/Gradle)
+target/
+build/
+out/
+
+# Logs
+*.log
+logs/
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Arquivos temporários e de dependências baixadas
+.gradle/
+.mvn/
+hs_err_pid*
+replay_pid*
+
+# Arquivos de configuração local (se você usar)
+.env
+
+# Arquivos específicos do IntelliJ
+/shelf/
+
+# Arquivos do sistema
+*~
+*.swp
+
+# Comentários específicos do Docker Compose (geralmente não precisa ignorar)
+# Mas se você tiver volumes com dados locais que não quer enviar:
+# minio_data/
+# postgres_data/
+# (Normalmente, os volumes nomeados não criam pastas no projeto, então isso não é necessário)
