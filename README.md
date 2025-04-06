@@ -3,7 +3,7 @@
 Este projeto demonstra uma API RESTful construída com Java e Spring Boot, utilizando Docker e Docker Compose para orquestrar os serviços necessários, incluindo PostgreSQL, MinIO e Traefik como proxy reverso, 
 atendendo aos requisitos para Desenvolvedor Java Backend.
 
-**Informações do Canditado:**
+**Informações do Candidato:**
 *   Nome: Marcos Luciano Peres
 *   CPF: 468.660.439-72
 *   email: marcos@linhalivre.com.br
@@ -203,6 +203,9 @@ Todos os endpoints sob `/api/v1/` (exceto os de autenticação) requerem um toke
     *   Conexão com banco de dados (para ambiente Docker).
     *   Conexão com MinIO (`minio.url`, `minio.public.url`, credenciais).
     *   Tempo de expiração do token de autenticação (`authentication.token.expiration-time`).
+          *   Configurado para 5 minutos (300000 milissegundos).
+          *   Desabilitar o tempo de expiração do token (=-1).
+    *   Tempo em minutos de expiração da URL pré-assinada da foto armazenada no MINIO (`minio.presigned.url.expiry.minutes`).         
     *   Origens permitidas para CORS (`cors.allowed.origins`).
     *   Porta da aplicação (`server.port`).
     *   Configurações de Log e JPA/Hibernate.
