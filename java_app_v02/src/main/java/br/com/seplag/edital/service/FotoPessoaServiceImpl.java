@@ -3,6 +3,8 @@ package br.com.seplag.edital.service;
 import br.com.seplag.edital.model.FotoPessoa;
 import br.com.seplag.edital.repository.FotoPessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,8 @@ public class FotoPessoaServiceImpl implements FotoPessoaService {
     private FotoPessoaRepository fotoPessoaRepository;
 
     @Override
-    public List<FotoPessoa> listarFotoPessoas() {
-        return fotoPessoaRepository.findAll();
+    public Page<FotoPessoa> listarFotoPessoas(Pageable pageable) {
+        return fotoPessoaRepository.findAll(pageable);
     }
 
     @Override

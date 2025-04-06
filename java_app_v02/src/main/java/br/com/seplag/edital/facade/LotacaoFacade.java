@@ -3,6 +3,8 @@ package br.com.seplag.edital.facade;
 import br.com.seplag.edital.model.Lotacao;
 import br.com.seplag.edital.service.LotacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class LotacaoFacade {
     @Autowired
     private LotacaoService lotacaoService;
 
-    public List<Lotacao> listarLotacoes() {
-        return lotacaoService.listarLotacoes();
+    public Page<Lotacao> listarLotacoes(Pageable pageable) {
+        return lotacaoService.listarLotacoes(pageable);
     }
 
     public Lotacao obterLotacaoPorId(Integer id) {

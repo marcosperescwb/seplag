@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,16 +36,15 @@ public class PessoaServiceProxy implements PessoaService {
     }
 
     @Override
-    public List<Pessoa> listarTodos() {
+    public Page<Pessoa> listarTodos(Pageable pageable) {
         logger.info("Listando todas as pessoas");
-        return pessoaService.listarTodos();
+        return pessoaService.listarTodos(pageable);
     }
 
     @Override
-    public boolean excluir(Integer id) {
+    public void excluir(Integer id) {
         logger.info("Excluindo pessoa com ID: {}", id);
         pessoaService.excluir(id);
-        return true;
     }
 
     @Override

@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +26,10 @@ public class UnidadeEnderecoServiceProxy implements UnidadeEnderecoService {
     private UnidadeEnderecoService unidadeEnderecoService;
 
     @Override
-    public List<UnidadeEndereco> listarUnidadeEnderecos() {
+    public Page<UnidadeEndereco> listarUnidadeEnderecos(
+            @PageableDefault(size = 10, sort = "pessoa.nome", direction = Sort.Direction.ASC) Pageable pageable) {
         logger.info("Listando todos os relacionamentos unidade-endereço");
-        return unidadeEnderecoService.listarUnidadeEnderecos();
+        return unidadeEnderecoService.listarUnidadeEnderecos(pageable);
     }
 
     @Override

@@ -3,6 +3,8 @@ package br.com.seplag.edital.facade;
 import br.com.seplag.edital.model.Pessoa;
 import br.com.seplag.edital.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,9 +25,9 @@ public class PessoaFacade {
         return pessoaService.buscarPorId(id);
     }
 
-    public List<Pessoa> listarTodasPessoas() {
+    public Page<Pessoa> listarTodasPessoas(Pageable pageable) {
 
-        return pessoaService.listarTodos();
+        return pessoaService.listarTodos(pageable);
     }
 
     public void excluirPessoa(Integer id) {

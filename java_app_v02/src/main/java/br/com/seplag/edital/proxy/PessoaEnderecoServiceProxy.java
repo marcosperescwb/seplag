@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +26,11 @@ public class PessoaEnderecoServiceProxy implements PessoaEnderecoService {
     private PessoaEnderecoService pessoaEnderecoService;
 
     @Override
-    public List<PessoaEndereco> listarPessoaEnderecos() {
+    public Page<PessoaEndereco> listarPessoaEnderecos(
+            @PageableDefault(size = 10, sort = "pessoa.nome", direction = Sort.Direction.ASC) Pageable pageable)
+    {
         logger.info("Listando todos os relacionamentos pessoa-endereço");
-        return pessoaEnderecoService.listarPessoaEnderecos();
+        return pessoaEnderecoService.listarPessoaEnderecos(pageable);
     }
 
     @Override

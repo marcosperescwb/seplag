@@ -3,6 +3,8 @@ package br.com.seplag.edital.facade;
 import br.com.seplag.edital.model.UnidadeEndereco;
 import br.com.seplag.edital.service.UnidadeEnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class UnidadeEnderecoFacade {
     @Autowired
     private UnidadeEnderecoService unidadeEnderecoService;
 
-    public List<UnidadeEndereco> listarUnidadeEnderecos() {
-        return unidadeEnderecoService.listarUnidadeEnderecos();
+    public Page<UnidadeEndereco> listarUnidadeEnderecos(Pageable pageable) {
+        return unidadeEnderecoService.listarUnidadeEnderecos(pageable);
     }
 
     public UnidadeEndereco obterUnidadeEnderecoPorId(Integer unidId, Integer endId) {

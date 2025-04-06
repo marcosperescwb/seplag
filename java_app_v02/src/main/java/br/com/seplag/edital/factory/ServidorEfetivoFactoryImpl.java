@@ -10,7 +10,7 @@ public class ServidorEfetivoFactoryImpl implements ServidorEfetivoFactory {
     @Override
     public ServidorEfetivo criarServidorEfetivo(Pessoa pessoa, String seMatricula) {
         ServidorEfetivo servidorEfetivo = new ServidorEfetivo();
-        servidorEfetivo.setPessoa(pessoa.getId());
+        servidorEfetivo.setPesId(pessoa.getId());
         servidorEfetivo.setSeMatricula(seMatricula);
         return servidorEfetivo;
     }

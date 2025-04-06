@@ -4,22 +4,23 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "servidor_efetivo")
-@IdClass(ServidorEfetivoId.class) // Especifica a classe de chave primária
+@IdClass(ServidorEfetivoId.class)
 public class ServidorEfetivo {
 
     @Id
     @Column(name = "pes_id")
-    private Integer pessoa;
+    private Integer pesId; // <-- RENOMEADO de 'pessoa' para 'pesId'
 
     @Column(name = "se_matricula")
     private String seMatricula;
 
-    public Integer getPessoa() {
-        return pessoa;
+    // Atualizar Getters e Setters
+    public Integer getPesId() { // <-- RENOMEADO
+        return pesId;
     }
 
-    public void setPessoa(Integer pessoa) {
-        this.pessoa = pessoa;
+    public void setPesId(Integer pesId) { // <-- RENOMEADO
+        this.pesId = pesId;
     }
 
     public String getSeMatricula() {

@@ -3,6 +3,8 @@ package br.com.seplag.edital.service;
 import br.com.seplag.edital.model.Unidade;
 import br.com.seplag.edital.repository.UnidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,8 @@ public class UnidadeServiceImpl implements UnidadeService {
     private UnidadeRepository unidadeRepository;
 
     @Override
-    public List<Unidade> listarUnidades() {
-        return unidadeRepository.findAll();
+    public Page<Unidade> listarUnidades(Pageable pageable) {
+        return unidadeRepository.findAll(pageable);
     }
 
     @Override

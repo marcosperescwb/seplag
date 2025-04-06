@@ -2,11 +2,12 @@ package br.com.seplag.edital.service;
 
 import br.com.seplag.edital.model.UnidadeEndereco;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UnidadeEnderecoService {
 
-    List<UnidadeEndereco> listarUnidadeEnderecos();
+    Page<UnidadeEndereco> listarUnidadeEnderecos(Pageable pageable);
 
     UnidadeEndereco obterUnidadeEnderecoPorId(Integer unidId, Integer endId);
 

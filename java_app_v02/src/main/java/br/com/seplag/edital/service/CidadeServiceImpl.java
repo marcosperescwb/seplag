@@ -3,6 +3,8 @@ package br.com.seplag.edital.service;
 import br.com.seplag.edital.model.Cidade;
 import br.com.seplag.edital.repository.CidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,10 +29,12 @@ public class CidadeServiceImpl implements CidadeService {
     }
 
     @Override
-    public List<Cidade> listarTodos() {
-        return cidadeRepository.findAll();
+    //public Page<Cidade> listarTodos(Pageable pageable) {
+      //  return cidadeRepository.findAll(pageable);
+    //}
+    public Page<Cidade> listarCidades(String nome, String estado, Pageable pageable) {
+        return cidadeRepository.findByNomeAndEstadoOptional(nome, estado, pageable);
     }
-
     @Override
     public void excluir(Integer id) {
         cidadeRepository.deleteById(id);

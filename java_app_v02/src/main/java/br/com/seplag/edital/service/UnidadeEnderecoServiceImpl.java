@@ -8,6 +8,8 @@ import br.com.seplag.edital.repository.UnidadeEnderecoRepository;
 import br.com.seplag.edital.repository.UnidadeRepository;
 import br.com.seplag.edital.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,8 @@ public class UnidadeEnderecoServiceImpl implements UnidadeEnderecoService {
     private EnderecoRepository enderecoRepository;
 
     @Override
-    public List<UnidadeEndereco> listarUnidadeEnderecos() {
-        return unidadeEnderecoRepository.findAll();
+    public Page<UnidadeEndereco> listarUnidadeEnderecos(Pageable pageable) {
+        return unidadeEnderecoRepository.findAll(pageable);
     }
 
     @Override

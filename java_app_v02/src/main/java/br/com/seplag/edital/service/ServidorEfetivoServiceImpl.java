@@ -5,6 +5,9 @@ import br.com.seplag.edital.model.ServidorEfetivoId;
 import br.com.seplag.edital.repository.ServidorEfetivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;     // Importar Page
+import org.springframework.data.domain.Pageable; // Importar Pageable
+import org.springframework.transaction.annotation.Transactional; // Para escrita/deleção
 
 import java.util.Optional;
 
@@ -13,6 +16,12 @@ public class ServidorEfetivoServiceImpl implements ServidorEfetivoService {
 
     @Autowired
     private ServidorEfetivoRepository servidorEfetivoRepository;
+
+    @Override
+    @Transactional(readOnly = true) // Opcional para leitura
+    public Page<ServidorEfetivo> listarServidoresEfetivos(Pageable pageable) {
+        return servidorEfetivoRepository.findAll(pageable);
+    }
 
     @Override
     public ServidorEfetivo obterServidorEfetivoPorPesId(Integer pesId) {
@@ -32,7 +41,7 @@ public class ServidorEfetivoServiceImpl implements ServidorEfetivoService {
         Optional<ServidorEfetivo> servidorEfetivoOptional = servidorEfetivoRepository.findById(seId);
 
         if (servidorEfetivoOptional.isPresent()) {
-            servidorEfetivo.setPessoa(pesId);  //Mantém a integridade do pes_id
+            servidorEfetivo.setPesId(pesId);  //Mantém a integridade do pes_id
             return servidorEfetivoRepository.save(servidorEfetivo);
         } else {
             return null;

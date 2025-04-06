@@ -1,12 +1,13 @@
 package br.com.seplag.edital.service;
 
 import br.com.seplag.edital.model.PessoaEndereco;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface PessoaEnderecoService {
 
-    List<PessoaEndereco> listarPessoaEnderecos();
+    Page<PessoaEndereco> listarPessoaEnderecos(Pageable pageable);
 
     PessoaEndereco obterPessoaEnderecoPorId(Integer pesId, Integer endId);
 

@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +24,9 @@ public class FotoPessoaServiceProxy implements FotoPessoaService {
     private FotoPessoaService fotoPessoaService;
 
     @Override
-    public List<FotoPessoa> listarFotoPessoas() {
+    public Page<FotoPessoa> listarFotoPessoas(Pageable pageable) {
         logger.info("Listando todas as fotos de pessoas");
-        return fotoPessoaService.listarFotoPessoas();
+        return fotoPessoaService.listarFotoPessoas(pageable);
     }
 
     @Override

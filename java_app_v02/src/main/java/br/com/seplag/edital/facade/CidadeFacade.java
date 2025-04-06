@@ -4,9 +4,8 @@ import br.com.seplag.edital.model.Cidade;
 import br.com.seplag.edital.service.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Component
 public class CidadeFacade {
@@ -22,22 +21,8 @@ public class CidadeFacade {
         return cidadeService.buscarPorId(id);
     }
 
-    public List<Cidade> listarCidades(String nome, String estado) {
-        List<Cidade> cidades = cidadeService.listarTodos();
-
-        // Lógica para filtrar as cidades com base nos parâmetros nome e estado
-        if (nome != null && !nome.isEmpty()) {
-            cidades = cidades.stream()
-                    .filter(c -> c.getNome().equalsIgnoreCase(nome))
-                    .collect(Collectors.toList());
-        }
-        if (estado != null && !estado.isEmpty()) {
-            cidades = cidades.stream()
-                    .filter(c -> c.getEstado().equalsIgnoreCase(estado))
-                    .collect(Collectors.toList());
-        }
-
-        return cidades;
+    public Page<Cidade> listarCidades(String nome, String estado, Pageable pageable) { // Aceita Pageable, Retorna Page
+        return cidadeService.listarCidades(nome, estado, pageable);
     }
 
     public void excluirCidade(Integer id) {

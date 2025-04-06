@@ -1,7 +1,8 @@
 package br.com.seplag.edital.service;
 
 import br.com.seplag.edital.model.Cidade;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CidadeService {
 
@@ -9,7 +10,8 @@ public interface CidadeService {
 
     Cidade buscarPorId(Integer id);
 
-    List<Cidade> listarTodos();
+    Page<Cidade> listarCidades(String nome, String estado, Pageable pageable);
+    //Page<Cidade> listarTodos(Pageable pageable);
 
     void excluir(Integer id);
 

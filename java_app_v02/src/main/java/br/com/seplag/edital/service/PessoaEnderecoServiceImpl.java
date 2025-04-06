@@ -4,6 +4,8 @@ import br.com.seplag.edital.model.PessoaEndereco;
 import br.com.seplag.edital.model.PessoaEnderecoId;
 import br.com.seplag.edital.repository.PessoaEnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class PessoaEnderecoServiceImpl implements PessoaEnderecoService {
     private PessoaEnderecoRepository pessoaEnderecoRepository;
 
     @Override
-    public List<PessoaEndereco> listarPessoaEnderecos() {
-        return pessoaEnderecoRepository.findAll();
+    public Page<PessoaEndereco> listarPessoaEnderecos(Pageable pageable) {
+        return pessoaEnderecoRepository.findAll(pageable);
     }
 
     @Override

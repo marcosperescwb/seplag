@@ -3,10 +3,12 @@ package br.com.seplag.edital.service;
 import br.com.seplag.edital.model.FotoPessoa;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface FotoPessoaService {
 
-    List<FotoPessoa> listarFotoPessoas();
+    Page<FotoPessoa> listarFotoPessoas(Pageable pageable);
 
     FotoPessoa obterFotoPessoaPorId(Integer id);
 

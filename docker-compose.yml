@@ -31,7 +31,7 @@ services:
       - MINIO_ROOT_PASSWORD=mlp020572
       - MINIO_DEFAULT_BUCKETS=bucket01
       - MINIO_BROWSER_REDIRECT_URL=http://console.marcosperes.com.br
-      - MINIO_SERVER_URL=http://s3.marcosperes.com.br
+      #- MINIO_SERVER_URL=http://s3.marcosperes.com.br
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio_s3.rule=Host(`s3.marcosperes.com.br`)"
@@ -76,12 +76,13 @@ services:
       - postgres
       
   java_app_v17:
-    image: openjdk:17
+    # Constrói a imagem a partir do Dockerfile na pasta ./java_app_v02
+    build: ./java_app_v02
     container_name: java_app_v17
-    volumes:
-      - ./java_app_v02:/usr/src/app
-    working_dir: /usr/src/app
-    command: ["sh", "-c", "while :; do sleep 10; done"]
+    # Não precisa mais de volumes para o código fonte ou command sleep
+    ports:
+      # Mapeamento opcional da porta do host para a porta do container para acesso direto (debug)
+      - "8083:8083"
     networks:
       minionetwork:
         ipv4_address: 172.18.0.6
@@ -89,9 +90,13 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.java_app_v17.rule=Host(`java17.marcosperes.com.br`)"
       - "traefik.http.routers.java_app_v17.entrypoints=web"
-      - "traefik.http.services.java_app_v17.loadbalancer.server.port=8083"    
-    depends_on:  # Garante que o Postgres esteja rodando antes do PgAdmin
-      - postgres      
+      # Garante que o Traefik envie tráfego para a porta correta DENTRO do container (8083)
+      - "traefik.http.services.java_app_v17.loadbalancer.server.port=8083"
+    depends_on:
+      - postgres  # Mantém a dependência do Postgres
+      - minio     # ADICIONA dependência explícita do MinIO
+   
+    restart: unless-stopped 
 
 networks:
   minionetwork:

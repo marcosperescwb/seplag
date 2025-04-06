@@ -3,6 +3,8 @@ package br.com.seplag.edital.facade;
 import br.com.seplag.edital.model.Unidade;
 import br.com.seplag.edital.service.UnidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class UnidadeFacade {
     @Autowired
     private UnidadeService unidadeService;
 
-    public List<Unidade> listarUnidades() {
-        return unidadeService.listarUnidades();
+    public Page<Unidade> listarUnidades(Pageable pageable) {
+        return unidadeService.listarUnidades(pageable);
     }
 
     public Unidade obterUnidadePorId(Integer id) {

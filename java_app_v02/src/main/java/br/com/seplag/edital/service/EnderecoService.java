@@ -1,11 +1,13 @@
 package br.com.seplag.edital.service;
 
 import br.com.seplag.edital.model.Endereco;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface EnderecoService {
 
-    List<Endereco> listarEnderecos();
+    Page<Endereco> listarEnderecos(Pageable pageable);
 
     Endereco obterEnderecoPorId(Integer id);
 
@@ -14,4 +16,6 @@ public interface EnderecoService {
     Endereco atualizarEndereco(Integer id, Endereco endereco);
 
     boolean deletarEndereco(Integer id);
+
+    Page<Endereco> findEnderecoUnidadePorNomeServidor(String nomeServidor, Pageable pageable);
 }

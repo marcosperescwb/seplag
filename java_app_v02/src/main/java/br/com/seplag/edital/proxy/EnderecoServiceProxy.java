@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +24,16 @@ public class EnderecoServiceProxy implements EnderecoService {
     private EnderecoService enderecoService;
 
     @Override
-    public List<Endereco> listarEnderecos() {
+    public Page<Endereco> listarEnderecos(Pageable pageable) {
         logger.info("Listando todos os endereços");
-        return enderecoService.listarEnderecos();
+        return enderecoService.listarEnderecos(pageable);
+    }
+
+    @Override
+    public Page<Endereco> findEnderecoUnidadePorNomeServidor(String nomeServidor, Pageable pageable) {
+        logger.info("Proxy: Buscando endereço de unidade por nome de servidor contendo '{}' com paginação: {}", nomeServidor, pageable);
+        // Chama o método real no serviço injetado
+        return enderecoService.findEnderecoUnidadePorNomeServidor(nomeServidor, pageable);
     }
 
     @Override

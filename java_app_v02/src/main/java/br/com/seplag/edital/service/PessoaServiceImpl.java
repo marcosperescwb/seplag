@@ -3,6 +3,9 @@ package br.com.seplag.edital.service;
 import br.com.seplag.edital.model.Pessoa;
 import br.com.seplag.edital.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,18 +30,17 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public List<Pessoa> listarTodos() {
-        return pessoaRepository.findAll();
+    public Page<Pessoa> listarTodos(Pageable pageable) {
+        return pessoaRepository.findAll(pageable);
     }
 
     @Override
-    public boolean excluir(Integer id) {
-        if (pessoaRepository.existsById(id)) {
-            pessoaRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
+    public void excluir(Integer id) {
+        if (!pessoaRepository.existsById(id)) {
+            // Lança uma exceção se a pessoa não for encontrada
+            throw new EmptyResultDataAccessException("Nenhuma Pessoa encontrada com ID: " + id, 1);
         }
+        pessoaRepository.deleteById(id);
     }
 
     @Override

@@ -1,7 +1,8 @@
 package br.com.seplag.edital.service;
 
 import br.com.seplag.edital.model.Pessoa;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface PessoaService {
 
@@ -9,9 +10,9 @@ public interface PessoaService {
 
     Pessoa buscarPorId(Integer id);
 
-    List<Pessoa> listarTodos();
+    Page<Pessoa> listarTodos(Pageable pageable);
 
-    boolean excluir(Integer id);
+    void excluir(Integer id);
 
     Pessoa alterar(Integer id, Pessoa pessoa);
 }

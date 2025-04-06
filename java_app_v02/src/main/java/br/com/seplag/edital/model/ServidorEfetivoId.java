@@ -5,21 +5,21 @@ import java.util.Objects;
 
 public class ServidorEfetivoId implements Serializable {
 
-    private Integer pessoa;  // Correspondente ao tipo da chave primária em Pessoa
+    private Integer pesId; // <-- RENOMEADO de 'pessoa' para 'pesId'
 
     public ServidorEfetivoId() {
     }
 
-    public ServidorEfetivoId(Integer pessoa) {
-        this.pessoa = pessoa;
+    public ServidorEfetivoId(Integer pesId) { // <-- RENOMEADO
+        this.pesId = pesId;
     }
 
-    public Integer getPessoa() {
-        return pessoa;
+    public Integer getPesId() { // <-- RENOMEADO
+        return pesId;
     }
 
-    public void setPessoa(Integer pessoa) {
-        this.pessoa = pessoa;
+    public void setPesId(Integer pesId) { // <-- RENOMEADO
+        this.pesId = pesId;
     }
 
     @Override
@@ -27,11 +27,11 @@ public class ServidorEfetivoId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ServidorEfetivoId that = (ServidorEfetivoId) o;
-        return Objects.equals(pessoa, that.pessoa);
+        return Objects.equals(pesId, that.pesId); // <-- RENOMEADO
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pessoa);
+        return Objects.hash(pesId); // <-- RENOMEADO
     }
 }
